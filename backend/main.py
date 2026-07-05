@@ -1,16 +1,19 @@
 from fastapi import FastAPI
-from backend.routes import router
+from fastapi.middleware.cors import CORSMiddleware
+from routes import router
 
-app = FastAPI(
-    title="AI Mock Interview Platform",
-    description="Backend API for AI-powered mock interviews",
-    version="1.0.0"
+app = FastAPI(title="AI Mock Interview Platform")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 app.include_router(router)
 
 @app.get("/")
 def home():
-    return {
-        "message": "Welcome to AI Mock Interview Platform 🚀"
-    }
+    return {"message": "AI Mock Interview Backend is running!"}
